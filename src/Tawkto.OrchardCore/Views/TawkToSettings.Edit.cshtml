@@ -1,0 +1,15 @@
+﻿@using Tawkto.OrchardCore.ViewModels
+@model TawktoSettingsViewModel
+<h3>@T["Tawk.to  Settings"]</h3>
+<div class="form-group">
+    <label>@T["Widget Name"]</label>
+    <input type="text" asp-for="WidgetName" class="form-control" />
+    <span asp-validation-for="WidgetName"></span>
+    <span class="hint">@T["The widget's name e.g Default"]</span>
+</div>
+<div class="form-group">
+    <label>@T["Token Key"]</label>
+    <input type="text" asp-for="TokenKey" class="form-control" />
+    <span asp-validation-for="TokenKey"></span>
+    <span class="hint">@T["Token key can be taken from the url https://tawk.to/chat/[TOKEN_KEY]/[WIDGET_NAME]"]</span>
+</div>

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+
+    <Title>TawkTo.OrchardCore</Title>
+    <Version>1.0.0-rc2-13450</Version>
+    <Description>Monitor and chat with the visitors on your website,respond to support tickets and create a help center toempower customers to help themselves – all 100 % Free</Description>
+    <Authors>Nicolas Maluleke</Authors>
+    <Company>NickSoftware</Company>
+    <PackageReleaseNotes>Enable module in features .Then a go to Configuration &gt; Settings &gt; Tawk To  to Add Token key</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Admin" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.0.0-rc2-13450" />
+
+    <PackageReference Include="OrchardCore.Navigation" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.0.0-rc2-13450" />
+  </ItemGroup>
+
+</Project>
