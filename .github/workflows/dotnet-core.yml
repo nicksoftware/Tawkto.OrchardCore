@@ -16,10 +16,13 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: 3.1.400
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet build --configuration Release --no-restore 
+      if: success()
+    - name: pack
+      run: dotnet pack --configuration Release
+    - name : deploy
+    - run: dotnet nuget push "bin/Release/Tawkto.OrchardCore.1.0.0.nupkg" --source "github" -k 1d01ae08287b1995120bfef5aa7d92e50998fbdf
