@@ -9,7 +9,7 @@
     <Description>Monitor and chat with the visitors on your website,respond to support tickets and create a help center toempower customers to help themselves – all 100 % Free</Description>
     <Authors>Nicolas Maluleke</Authors>
     <Company>NickSoftware</Company>
-    <PackageReleaseNotes>Enable module in features .Then a go to Configuration &gt; Settings &gt; Tawk To  to Add Token key</PackageReleaseNotes>
+    <PackageReleaseNotes>Enable module in features .Then a go to Configuration &gt; Settings &gt; Tawk To  to Add Token key taken from https://tawk.to</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
