@@ -24,5 +24,5 @@ jobs:
       if: success()
     - name: pack
       run: dotnet pack --configuration Release
-    - name : deploy
+    - name: deploy
     - run: dotnet nuget push "bin/Release/Tawkto.OrchardCore.1.0.0.nupkg" --source "github" -k 1d01ae08287b1995120bfef5aa7d92e50998fbdf
