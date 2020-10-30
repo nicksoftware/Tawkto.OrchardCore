@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Tawkto.OrchardCore.Settings;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrchardCore.Admin;
@@ -8,17 +9,16 @@ using OrchardCore.Settings;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNetCore.Html;
-using Tawkto.OrchardCore.Settings;
 using System.Text;
 
 namespace Tawkto.OrchardCore.Filters
 {
-    public class TawkToFilter : IAsyncResultFilter
+    public class TawktoFilter : IAsyncResultFilter
     {
         private readonly IResourceManager _resourceManager;
         private readonly ISiteService _siteService;
 
-        public TawkToFilter(
+        public TawktoFilter(
             IResourceManager resourceManager,
             ISiteService siteService)
         {
@@ -26,11 +26,11 @@ namespace Tawkto.OrchardCore.Filters
             _siteService = siteService;
         }
 
-
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             //Only inject in client not admin
-            if ((context.Result is ViewResult || context.Result is PageResult)
+            if ((context.Result is ViewResult
+                || context.Result is PageResult)
                 && !AdminAttribute.IsApplied(context.HttpContext))
             {
                 var settings = (await _siteService.GetSiteSettingsAsync())
@@ -40,25 +40,9 @@ namespace Tawkto.OrchardCore.Filters
                 if (!string.IsNullOrEmpty(settings.WidgetName) &&
                     !string.IsNullOrEmpty(settings.TokenKey))
                 {
+                    string script = BuildScript(settings);
 
-                    StringBuilder scriptBuilder = new StringBuilder();
-
-                    scriptBuilder
-                        .Append("<script type=\"text / javascript\">")
-                        .AppendLine("var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();")
-                        .AppendLine("(function(){")
-                        .AppendLine("var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];")
-                        .AppendLine("s1.async=true;")
-                        .Append("s1.src='https://embed.tawk.to/"+ settings.TokenKey+"/"+ settings.WidgetName+ "';")
-                        .AppendLine()
-                        .AppendLine("s1.charset='UTF-8';")
-                        .AppendLine("s1.setAttribute('crossorigin','*');")
-                        .AppendLine("s0.parentNode.insertBefore(s1,s0);")
-                        .AppendLine("})();")
-                        .AppendLine("</script>");
-
-
-                    HtmlString htmlString = new HtmlString(scriptBuilder.ToString());
+                    HtmlString htmlString = new HtmlString(script);
 
                     _resourceManager.RegisterFootScript(htmlString);
                 }
@@ -66,5 +50,24 @@ namespace Tawkto.OrchardCore.Filters
 
             await next.Invoke();
         }
+
+        private static string BuildScript(TawktoSettings settings)
+        {
+            StringBuilder scriptBuilder = new StringBuilder();
+
+            scriptBuilder.AppendLine("<!--Start of Tawk.to Script-->")
+                .AppendLine("<script type=\"text/javascript\">")
+                .AppendLine("var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();")
+                .AppendLine("(function(){")
+                .AppendLine("var s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];")
+                .AppendLine("s1.async=true;")
+                .AppendLine("s1.src='https://embed.tawk.to/" + settings.TokenKey + "/" + settings.WidgetName + "';")
+                .AppendLine("s1.charset='UTF-8';")
+                .AppendLine("s1.setAttribute('crossorigin','*');")
+                .AppendLine("s0.parentNode.insertBefore(s1,s0);")
+                .AppendLine("})();")
+                .AppendLine("</script>");
+            return scriptBuilder.ToString();
+        }
     }
-}   
+}

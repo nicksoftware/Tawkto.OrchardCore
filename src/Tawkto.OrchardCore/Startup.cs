@@ -1,4 +1,6 @@
 using System;
+using Tawkto.OrchardCore.Drivers;
+using Tawkto.OrchardCore.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -8,8 +10,6 @@ using OrchardCore.Modules;
 using OrchardCore.Navigation;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
-using Tawkto.OrchardCore.Drivers;
-using Tawkto.OrchardCore.Filters;
 
 namespace Tawkto.OrchardCore
 {
@@ -17,13 +17,13 @@ namespace Tawkto.OrchardCore
     {
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IDisplayDriver<ISite>, TawktoSettingsDisplayDrivers>();
+            services.AddScoped<IDisplayDriver<ISite>, Tawkto.OrchardCore.Drivers.TawktoSettingsDisplayDrivers>();
             services.AddScoped<INavigationProvider, AdminMenu>();
             services.AddScoped<IPermissionProvider, Permissions>();
 
             services.Configure<MvcOptions>((options) =>
             {
-                options.Filters.Add(typeof(TawkToFilter));
+                options.Filters.Add(typeof(TawktoFilter));
             });
         }
 
