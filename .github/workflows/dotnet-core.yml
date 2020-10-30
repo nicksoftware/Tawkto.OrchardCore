@@ -21,7 +21,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore 
-      if: success()
     - name: pack
       run: dotnet pack --configuration Release
     - name: deploy
